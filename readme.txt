@@ -3,7 +3,7 @@ Contributors: paraplegicpanda
 Donate link: http://trezy.com/slyd
 Tags: Slydr
 Requires at least: 3.0
-Tested up to: 3.1
+Tested up to: 3.3.1
 Stable tag: trunk
 
 Slyd is an animated Slydr to display your latest blog posts.
