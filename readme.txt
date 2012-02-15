@@ -51,6 +51,12 @@ The Slyd shortcode supports the following options:
 
 The Slyd template tag supports the same options as the shortcode.
 
+**Usage**
+
+`<?php slyd( $category, $slydcount, $height, $width, $outline, $show_titles, $show_captions ); ?>`
+
+`<?php slyd( 'foo', '5', '300', '960px', 'orange', false, false); ?>`
+
 = I need more help! =
 
 If you just can't figure out how to use Slyd, shoot me an email! I'm happy to help and thus further my name in preparation for world domina... I mean, I offer customer support.
@@ -58,12 +64,6 @@ If you just can't figure out how to use Slyd, shoot me an email! I'm happy to he
 Email: tre [at] trezy [dot] com
 
 Website: http://trezy.com
-
-**Usage**
-
-`<?php slyd( $category, $slydcount, $height, $width, $outline, $show_titles, $show_captions ); ?>`
-
-`<?php slyd( 'foo', '5', '300', '960px', 'orange', false, false); ?>`
 
 == Plans for the Future ==
 * **Themes**
