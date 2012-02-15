@@ -43,14 +43,19 @@ The Slyd shortcode supports the following options:
 * `show_titles` - Show/Hide blog titles. Can be set to either `true` or `false`. Defaults to `true`.
 * `show_captions` - Same as `show_titles`, but for your blog's excerpt.
 
-**Usage** - `[slyd category='foo' slydcount='5' height='300' width='960px' outline='orange' show_titles='false' show_captions='false']`
+**Usage**
+
+`[slyd category='foo' slydcount='5' height='300' width='960px' outline='orange' show_titles='false' show_captions='false']`
 
 = How can I customize my Slyd template tag? =
 
 The Slyd template tag supports the same options as the shortcode. Separate multiple categories with commas.
 
-**Usage** - `<?php slyd( $category, $slydcount, $height, $width, $outline, $show_titles, $show_captions ); ?>`
-**e.g.** - `<?php slyd( 'foo', '5', '300', '960px', 'orange', false, false); ?>`
+**Usage**
+
+`<?php slyd( $category, $slydcount, $height, $width, $outline, $show_titles, $show_captions ); ?>`
+
+`<?php slyd( 'foo', '5', '300', '960px', 'orange', false, false); ?>`
 
 == Future Upgrades ==
 * **Different Themes**
