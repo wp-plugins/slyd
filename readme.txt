@@ -49,7 +49,15 @@ The Slyd shortcode supports the following options:
 
 = How can I customize my Slyd template tag? =
 
-The Slyd template tag supports the same options as the shortcode. Separate multiple categories with commas.
+The Slyd template tag supports the same options as the shortcode.
+
+= I need more help! =
+
+If you just can't figure out how to use Slyd, shoot me an email! I'm happy to help and thus further my name in preparation for world domina... I mean, I offer customer support.
+
+Email: tre [at] trezy [dot] com
+
+Website: http://trezy.com
 
 **Usage**
 
@@ -57,8 +65,8 @@ The Slyd template tag supports the same options as the shortcode. Separate multi
 
 `<?php slyd( 'foo', '5', '300', '960px', 'orange', false, false); ?>`
 
-== Future Upgrades ==
-* **Different Themes**
+== Plans for the Future ==
+* **Themes**
 * **Custom Slyd caption for each post**
 * **Gallery style Slydr**
 * **Image Options** - Fit (image stretches to fitwidth of container) or Center (image maintains original proportions ans can anchor to the center, any corner, or any side).
