@@ -10,7 +10,9 @@ Slyd is an animated Slydr to display your latest blog posts.
 
 == Description ==
 
-After searching forever to find a Wordpress plugin that created a Slydr to display my blog posts I decided to build my own. Slyd is the fruit of that labor. Slyd offers several 
+Slyd is an easy-to-use, highly-customizable slider plugin for WordPress. There are plenty of plugins out there that allow you to easily insert a slider into your WordPress using a shortcode but they require creating a custom slide for every post you write.
+
+With Slyd you can shirk those inconveniences. Slyd automatically pulls in all of your latest posts (or just the ones in a certain category). All Slyd requires is that you upload a Slyd image on your post page.
 
 features and customization options, including:
 
