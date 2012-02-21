@@ -17,7 +17,6 @@ With Slyd you can shirk those inconveniences. Slyd automatically pulls in all of
 features and customization options, including:
 
 * **CSS3/jQuery Animations** - Slyd is built to be pretty so naturally it uses CSS3 and jQuery to impress viewers.
-* **Graceful Breakdown** - We know that users don't always use the latest browsers so Slyd is built to look good even if a user doesn't support technology like CSS3 and jQuery
 * **Category Selection** - Create a new Category or use an existing one to limit the posts that display in the Slydr.
 * **Shortcode** - Normal users can insert the `[slyd]` shortcode to display the Slydr.
 * **PHP Template Tag** - For more advanced users, install Slyd into a theme using `<?php slyd(); ?>`.
@@ -41,6 +40,7 @@ The Slyd shortcode supports the following options:
 
 * `category` - Add the category(s) you want Slyd to be limited to. Separate multiple categories with commas. Default is all categories.
 * `slydcount` - How many posts you want Slyd to display. Default is 5.
+* `nav` - Determines how to display the navigation arrows. Options are `show` for always visible arrows, `hide` to get rid of the arrows entirely, or `hover` to only display the arrows when a user hovers over the Slydr. Defaults to `hover`
 * `height` - Set the height for your Slydr. Must be defined in pixels, but don't include the unit (i.e. `height='500'`). Defaults to the height of your tallest slyd image.
 * `width` - Set the width for your Slydr. Can be defined in any unit - i.e. `%`, `px`, `em`, etc. - and must include the unit (i.e. `width='960px'`). Defaults to 100%. 
 * `outline` - Set an outline for your Slydr. Can be defined as any CSS readable color (i.e. `#00f`, `#0000ff`, `rgba(0, 0, 255, 1)`, `red`) or set to `none`. Defaults to black.
@@ -51,7 +51,7 @@ The Slyd shortcode supports the following options:
 
 **Usage**
 
-`[slyd category='foo' slydcount='3' height='300' width='960px' outline='orange' show_titles='false' show_captions='false' speed='3000' autoadvance='false']`
+`[slyd category='foo' slydcount='3', nav='show' height='300' width='960px' outline='orange' show_titles='false' show_captions='false' speed='3000' autoadvance='false']`
 
 = How can I customize my Slyd template tag? =
 
@@ -59,9 +59,9 @@ The Slyd template tag supports the same options as the shortcode.
 
 **Usage**
 
-`<?php slyd( $category, $slydcount, $height, $width, $outline, $show_titles, $show_captions, $speed, $autoadvance ); ?>`
+`<?php slyd( $category, $slydcount, $nav, $height, $width, $outline, $show_titles, $show_captions, $speed, $autoadvance ); ?>`
 
-`<?php slyd( 'foo', '3', '300', '960px', 'orange', false, false, 3000, false ); ?>`
+`<?php slyd( 'foo', '3', 'show', '300', '960px', 'orange', false, false, 3000, false ); ?>`
 
 = I need more help! =
 
@@ -84,11 +84,14 @@ No major changes needed, just upgrade from the Wordpress interface. ;-)
 
 == Changelog ==
 
+= 1.2 =
+* Added `nav` to change when the navigation arrows display.
+
 = 1.1 =
 * Slydrs now auto advance by default, `autoadvance` attribute can change this and `speed` attribute can adjust the speed. Hovering over the Slydr pauses the auto advance.
-* Now using jQuery.doTimeout by Ben Alman
-* Cleaned up some of the PHP
-* Added more comments to both PHP and Javascript
+* Now using jQuery.doTimeout by Ben Alman.
+* Cleaned up some of the PHP.
+* Added more comments to both PHP and Javascript.
 * Minor bug fixes.
 
 = 1.0 =

@@ -83,8 +83,8 @@ jQuery(document).ready(function(){
 	});
 	
 	// Things to change based on if there's 1 post or more
-	if ( slyd_posts == 1 || !slyd_autoadvance ) {
-		// Hide the navi
+	if ( slyd_posts == 1 ) {
+		// Hide the navigation arrows if there's only one post
 		jQuery(".slyd_nav").hide();
 	} else {
 		// Stop the lock on hover, start it on mouseOut and on document ready
@@ -94,7 +94,26 @@ jQuery(document).ready(function(){
 			slyd_clock_analysis();
 		});
 		
-		// Stop clock on hover, restart it on mouseOut
-		slyd_clock_analysis();
+		if ( slyd_autoadvance ) {
+			// Stop clock on hover, restart it on mouseOut
+			slyd_clock_analysis();
+		};
+		
+		switch (slyd_nav) {
+			case "show":
+				break;
+			case "hide":
+				jQuery(".slyd_nav").hide();
+				break;
+			case "hover":
+				jQuery(".slyd_nav").hide();
+				jQuery(".slyd").hover( function() {
+					jQuery(".slyd_nav").fadeIn(500);
+				}, function() {
+					jQuery(".slyd_nav").fadeOut(500);
+				});
+				break;
+			default:
+		}
 	};
 });

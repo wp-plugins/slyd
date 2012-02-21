@@ -180,7 +180,7 @@ License: GPL3
 		return $term->term_id;
 	}
 
-	function slyd( $category, $slydcount, $height, $width, $outline, $show_titles, $show_captions, $autoadvance, $speed ) {
+	function slyd( $category, $slydcount, $nav, $height, $width, $outline, $show_titles, $show_captions, $autoadvance, $speed ) {
 		// Add the stylesheet and javascript to the queue; javascript will only load if jQuery is loaded
 		wp_enqueue_style( 'slyd_css', plugins_url( 'slyd.css', __FILE__ ) );
 		wp_enqueue_script( 'slyd_js', plugins_url( 'slyd.js', __FILE__ ), array( 'jquery' ) );
@@ -196,6 +196,7 @@ License: GPL3
 		$slydposts				=	get_posts( $args );
 		$tmp_post				=	$post;
 		$slyd_height			=	'';
+		$slyd_nav				=	'';
 		$slyd_outline			=	'';
 		$slyd_titles			=	'';
 		$slyd_captions			=	'';
@@ -206,6 +207,7 @@ License: GPL3
 		$slyd_next				=	plugins_url( 'next.png', __FILE__ );
 		
 		if ( $height != 'auto' ) { $slyd_height = $height; }
+		if ( $nav ) { $nav_js = "var slyd_nav = '{$nav}'; "; }
 		if ( $outline != 'none' ) { $slyd_outline = "outline: 1px solid {$outline};"; }
 		if ( $show_titles ) { $slyd_titles = "var slyd_titles = {$show_titles}; "; }
 		if ( $show_captions ) { $slyd_captions = "var slyd_captions = {$show_captions}; "; }
@@ -253,7 +255,7 @@ License: GPL3
 		endforeach;
 		
 		$post			=	$tmp_post;	// Empty $post once Slyd is done with it
-		$slyd_height_js	=	"<script type='text/javascript'> var slyd_posts = {$i}; var slyd_height = {$slyd_height}; {$slyd_titles}{$slyd_captions}{$slyd_height_js}{$slyd_autoadvance_js}{$slyd_speed_js}</script>";
+		$slyd_height_js	=	"<script type='text/javascript'> var slyd_posts = {$i}; var slyd_height = {$slyd_height}; {$nav_js}{$slyd_titles}{$slyd_captions}{$slyd_height_js}{$slyd_autoadvance_js}{$slyd_speed_js}</script>";
 			
 		return 
 			"{$slyd_height_js}
@@ -274,6 +276,7 @@ License: GPL3
 		extract( shortcode_atts( array(
 			'category'		=>	'',
 			'slydcount'		=>	'5',
+			'nav'			=>	'hover',
 			'height'		=>	'auto',
 			'width'			=>	'100%',
 			'outline'		=>	'#000',
@@ -283,7 +286,7 @@ License: GPL3
 			'speed'			=>	4000
 		), $atts ) );
 		
-		return slyd( $category, $slydcount, $height, $width, $outline, $show_titles, $show_captions, $autoadvance, $speed );
+		return slyd( $category, $slydcount, $nav, $height, $width, $outline, $show_titles, $show_captions, $autoadvance, $speed );
 	}
 		
 	add_shortcode( 'slyd', 'slyd_shortcode' );
