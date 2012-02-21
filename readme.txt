@@ -4,13 +4,15 @@ Donate link: http://trezy.com/slyd
 Tags: slyd, slydr, slide, slider, wordpress, plugins, carousel, banners, featured content, gallery, image rotation, javascript slider, jquery slider, responsive, slideshow
 Requires at least: 3.0
 Tested up to: 3.3.1
-Stable tag: trunk
+Stable tag: 1.1
 
 Slyd is an animated Slydr to display your latest blog posts.
 
 == Description ==
 
-After searching forever to find a Wordpress plugin that created a Slydr to display my blog posts I decided to build my own. Slyd is the fruit of that labor. Slyd offers several features and customization options, including:
+After searching forever to find a Wordpress plugin that created a Slydr to display my blog posts I decided to build my own. Slyd is the fruit of that labor. Slyd offers several 
+
+features and customization options, including:
 
 * **CSS3/jQuery Animations** - Slyd is built to be pretty so naturally it uses CSS3 and jQuery to impress viewers.
 * **Graceful Breakdown** - We know that users don't always use the latest browsers so Slyd is built to look good even if a user doesn't support technology like CSS3 and jQuery
@@ -42,10 +44,12 @@ The Slyd shortcode supports the following options:
 * `outline` - Set an outline for your Slydr. Can be defined as any CSS readable color (i.e. `#00f`, `#0000ff`, `rgba(0, 0, 255, 1)`, `red`) or set to `none`. Defaults to black.
 * `show_titles` - Show/Hide blog titles. Can be set to either `true` or `false`. Defaults to `true`.
 * `show_captions` - Same as `show_titles`, but for your blog's excerpt.
+* `speed` - Set the speed for your Slydr, i.e. how long a slyd will stay before switching to the next one. Define in milliseconds (`1000` = 1 second). Defaults to `4000` or 4 seconds.
+* `autoadvance` - Set to `false` to stop autoadvance. Defaults to `true`.
 
 **Usage**
 
-`[slyd category='foo' slydcount='5' height='300' width='960px' outline='orange' show_titles='false' show_captions='false']`
+`[slyd category='foo' slydcount='3' height='300' width='960px' outline='orange' show_titles='false' show_captions='false' speed='3000' autoadvance='false']`
 
 = How can I customize my Slyd template tag? =
 
@@ -53,9 +57,9 @@ The Slyd template tag supports the same options as the shortcode.
 
 **Usage**
 
-`<?php slyd( $category, $slydcount, $height, $width, $outline, $show_titles, $show_captions ); ?>`
+`<?php slyd( $category, $slydcount, $height, $width, $outline, $show_titles, $show_captions, $speed, $autoadvance ); ?>`
 
-`<?php slyd( 'foo', '5', '300', '960px', 'orange', false, false); ?>`
+`<?php slyd( 'foo', '3', '300', '960px', 'orange', false, false, 3000, false ); ?>`
 
 = I need more help! =
 
@@ -73,6 +77,13 @@ Website: http://trezy.com
 * **Animation Options** - Slide, Slide Over, or Fade
 
 == Changelog ==
+
+= 1.1 =
+* Slydrs now auto advance by default, `autoadvance` attribute can change this and `speed` attribute can adjust the speed. Hovering over the Slydr pauses the auto advance.
+* Now using jQuery.doTimeout by Ben Alman
+* Cleaned up some of the PHP
+* Added more comments to both PHP and Javascript
+* Minor bug fixes.
 
 = 1.0 =
 * Launch.

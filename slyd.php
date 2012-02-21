@@ -3,7 +3,7 @@
 Plugin Name: Slyd
 Plugin URI: http://trezy.com/slyd
 Description: Slyd is an animated slider to display your latest blog posts.
-Version: 1.0
+Version: 1.1
 Author: Trezy
 Author URI: http://trezy.com
 License: GPL3
@@ -180,10 +180,11 @@ License: GPL3
 		return $term->term_id;
 	}
 
-	function slyd( $category, $slydcount, $height, $width, $outline, $show_titles, $show_captions ) {
+	function slyd( $category, $slydcount, $height, $width, $outline, $show_titles, $show_captions, $autoadvance, $speed ) {
 		// Add the stylesheet and javascript to the queue; javascript will only load if jQuery is loaded
 		wp_enqueue_style( 'slyd_css', plugins_url( 'slyd.css', __FILE__ ) );
 		wp_enqueue_script( 'slyd_js', plugins_url( 'slyd.js', __FILE__ ), array( 'jquery' ) );
+		wp_enqueue_script( 'dotimeout', plugins_url( 'jquery.dotimeout.js', __FILE__ ), array( 'jquery' ) );
 		
 		$category				=	get_category_id($category);
 
@@ -204,21 +205,12 @@ License: GPL3
 		$slyd_previous			=	plugins_url( 'previous.png', __FILE__ );
 		$slyd_next				=	plugins_url( 'next.png', __FILE__ );
 		
-		if ( $height != 'auto' ) {
-			$slyd_height		=	$height;
-		}
-		
-		if ( $outline != 'none' ) {
-			$slyd_outline		=	"outline: 1px solid {$outline};";
-		}
-		
-		if ( $show_titles ) {
-			$slyd_titles		=	"var slyd_titles = {$show_titles};";
-		}
-		
-		if ( $show_captions ) {
-			$slyd_captions		=	"var slyd_captions = {$show_captions};";
-		}
+		if ( $height != 'auto' ) { $slyd_height = $height; }
+		if ( $outline != 'none' ) { $slyd_outline = "outline: 1px solid {$outline};"; }
+		if ( $show_titles ) { $slyd_titles = "var slyd_titles = {$show_titles}; "; }
+		if ( $show_captions ) { $slyd_captions = "var slyd_captions = {$show_captions}; "; }
+		if ( $speed ) { $slyd_speed_js = "var slyd_speed = {$speed}; "; }
+		if ( $autoadvance ) { $slyd_autoadvance_js = "var slyd_autoadvance = true; "; }
 		
 		foreach ( $slydposts as $post ) : setup_postdata($post);
 			$post_title			=	get_the_title();																					// Get the post's title
@@ -261,7 +253,7 @@ License: GPL3
 		endforeach;
 		
 		$post			=	$tmp_post;	// Empty $post once Slyd is done with it
-		$slyd_height_js	=	"<script type='text/javascript'> {$slyd_titles} {$slyd_captions} var slyd_height = {$slyd_height}; var slyd_posts = {$i}; </script>";
+		$slyd_height_js	=	"<script type='text/javascript'> var slyd_posts = {$i}; var slyd_height = {$slyd_height}; {$slyd_titles}{$slyd_captions}{$slyd_height_js}{$slyd_autoadvance_js}{$slyd_speed_js}</script>";
 			
 		return 
 			"{$slyd_height_js}
@@ -270,8 +262,8 @@ License: GPL3
 					{$ret}
 				</div>
 				<div class='slyd_nav' style='height: {$slyd_height}px;'>
-					<a href='#' class='slyd_previous' style='background: url({$slyd_previous}) center no-repeat; display:none;'></a>
-					<a href='#' class='slyd_next' style='background: url({$slyd_next}) center no-repeat;'></a>
+					<a class='slyd_previous' style='background: url({$slyd_previous}) center no-repeat; display:none;'></a>
+					<a class='slyd_next' style='background: url({$slyd_next}) center no-repeat;'></a>
 				</div>
 			</div>";
 	}
@@ -286,10 +278,12 @@ License: GPL3
 			'width'			=>	'100%',
 			'outline'		=>	'#000',
 			'show_titles'	=>	true,
-			'show_captions'	=>	true
+			'show_captions'	=>	true,
+			'autoadvance'	=>	true,
+			'speed'			=>	4000
 		), $atts ) );
 		
-		return slyd( $category, $slydcount, $height, $width, $outline, $show_titles, $show_captions );
+		return slyd( $category, $slydcount, $height, $width, $outline, $show_titles, $show_captions, $autoadvance, $speed );
 	}
 		
 	add_shortcode( 'slyd', 'slyd_shortcode' );
