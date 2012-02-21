@@ -69,6 +69,10 @@ Email: tre [at] trezy [dot] com
 
 Website: http://trezy.com
 
+== Upgrade Notice ==
+
+No major changes needed, just upgrade from the Wordpress interface. ;-)
+
 == Plans for the Future ==
 * **Themes**
 * **Custom Slyd caption for each post**
