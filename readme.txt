@@ -4,7 +4,7 @@ Donate link: http://trezy.com/slyd
 Tags: slyd, slydr, slide, slider, wordpress, plugins, carousel, banners, featured content, gallery, image rotation, javascript slider, jquery slider, responsive, slideshow
 Requires at least: 3.0
 Tested up to: 3.3.1
-Stable tag: 1.1
+Stable tag: 1.2
 
 Slyd is an animated Slydr to display your latest blog posts.
 
