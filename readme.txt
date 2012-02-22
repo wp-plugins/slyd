@@ -40,7 +40,7 @@ The Slyd shortcode supports the following options:
 
 * `category` - Add the category(s) you want Slyd to be limited to. Separate multiple categories with commas. Default is all categories.
 * `slydcount` - How many posts you want Slyd to display. Default is 5.
-* `nav` - Determines how to display the navigation arrows. Options are `show` for always visible arrows, `hide` to get rid of the arrows entirely, or `hover` to only display the arrows when a user hovers over the Slydr. Defaults to `hover`
+* `nav` - Determines how to display the navigation arrows. Options are `show` for always visible arrows, `hide` to get rid of the arrows entirely, or `hover` to only display the arrows when a user hovers over the Slydr. Defaults to `hover`.
 * `height` - Set the height for your Slydr. Must be defined in pixels, but don't include the unit (i.e. `height='500'`). Defaults to the height of your tallest slyd image.
 * `width` - Set the width for your Slydr. Can be defined in any unit - i.e. `%`, `px`, `em`, etc. - and must include the unit (i.e. `width='960px'`). Defaults to 100%. 
 * `outline` - Set an outline for your Slydr. Can be defined as any CSS readable color (i.e. `#00f`, `#0000ff`, `rgba(0, 0, 255, 1)`, `red`) or set to `none`. Defaults to black.
