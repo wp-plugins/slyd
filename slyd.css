@@ -29,6 +29,7 @@
 	}
 		.slyd .slyd_nav .slyd_previous,
 		.slyd .slyd_nav .slyd_next {
+			cursor: pointer;
 			display: block;
 			height: 100px;
 			margin-top: -50px;

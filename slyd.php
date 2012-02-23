@@ -218,7 +218,8 @@ License: GPL3
 			$post_title			=	get_the_title();																					// Get the post's title
 			$post_content		=	substr( apply_filters( 'the_content', get_the_content('', '', '') ), 0, 150 );						// Get the post's content
 			$post_permalink		=	get_permalink();																					// Get the post's permalink
-			$post_thumb_src		= 	wp_get_attachment_image_src( get_post_meta( $post->ID, '_slyd_attached_image', true ), 'full' );	// Get the post's featured image's src
+			$post_slyd_image	=	get_post_meta( $post->ID, '_slyd_attached_image', false );
+			$post_thumb_src		= 	wp_get_attachment_image_src( $post_slyd_image[0], 'full' );											// Get the post's featured image's src
 									// wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'full' );	<-- Use the post's Featured Image instead of Slyd Image
 			$post_thumb			=	'';
 			$slyd_margin		=	'';
@@ -255,10 +256,10 @@ License: GPL3
 		endforeach;
 		
 		$post			=	$tmp_post;	// Empty $post once Slyd is done with it
-		$slyd_height_js	=	"<script type='text/javascript'> var slyd_posts = {$i}; var slyd_height = {$slyd_height}; {$nav_js}{$slyd_titles}{$slyd_captions}{$slyd_height_js}{$slyd_autoadvance_js}{$slyd_speed_js}</script>";
+		$slyd_js		=	"<script type='text/javascript'> var slyd_posts = {$i}; var slyd_height = {$slyd_height}; {$nav_js}{$slyd_titles}{$slyd_captions}{$slyd_height_js}{$slyd_autoadvance_js}{$slyd_speed_js}</script>";
 			
 		return 
-			"{$slyd_height_js}
+			"{$slyd_js}
 			<div class='slyd' style='height: {$slyd_height}px; width: {$width}; {$slyd_outline}'>
 				<div class='slyd_wrapper' style='height: {$slyd_height}px;'>
 					{$ret}
