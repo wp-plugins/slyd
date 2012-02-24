@@ -218,8 +218,8 @@ License: GPL3
 			$post_title			=	get_the_title();																					// Get the post's title
 			$post_content		=	substr( apply_filters( 'the_content', get_the_content('', '', '') ), 0, 150 );						// Get the post's content
 			$post_permalink		=	get_permalink();																					// Get the post's permalink
-			$post_slyd_image	=	get_post_meta( $post->ID, '_slyd_attached_image', false );
-			$post_thumb_src		= 	wp_get_attachment_image_src( $post_slyd_image[0], 'full' );											// Get the post's featured image's src
+			$post_slyd_image	=	get_post_meta( $post->ID, '_slyd_attached_image', true );
+			$post_thumb_src		= 	wp_get_attachment_image_src( $post_slyd_image, 'full' );											// Get the post's featured image's src
 									// wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'full' );	<-- Use the post's Featured Image instead of Slyd Image
 			$post_thumb			=	'';
 			$slyd_margin		=	'';
@@ -287,7 +287,9 @@ License: GPL3
 			'speed'			=>	4000
 		), $atts ) );
 		
-		return slyd( $category, $slydcount, $nav, $height, $width, $outline, $show_titles, $show_captions, $autoadvance, $speed );
+		if ( !is_admin() ) {
+			return slyd( $category, $slydcount, $nav, $height, $width, $outline, $show_titles, $show_captions, $autoadvance, $speed );
+		}
 	}
 		
 	add_shortcode( 'slyd', 'slyd_shortcode' );

@@ -4,7 +4,7 @@ Donate link: http://trezy.com/slyd
 Tags: slyd, slydr, slide, slider, wordpress, plugins, carousel, banners, featured content, gallery, image rotation, javascript slider, jquery slider, responsive, slideshow
 Requires at least: 3.0
 Tested up to: 3.3.1
-Stable tag: 1.2.1
+Stable tag: 1.2.2
 
 Slyd is an animated Slydr to display your latest blog posts.
 
@@ -84,9 +84,12 @@ No major changes needed, just upgrade from the Wordpress interface. ;-)
 
 == Changelog ==
 
+= 1.2.2 =
+* More minor bug fixes.
+
 = 1.2.1 =
-* Fixed a bug causing the nav arrows to not display
-* Fixed a major issue with the way Slyd retrieves the Slyd Image from each post
+* Fixed a bug causing the nav arrows to not display.
+* Fixed a major issue with the way Slyd retrieves the Slyd Image from each post.
 
 = 1.2 =
 * Added `nav` to change when the navigation arrows display.

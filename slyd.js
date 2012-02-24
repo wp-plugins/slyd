@@ -87,7 +87,7 @@ jQuery(document).ready(function(){
 		// Hide the navigation arrows if there's only one post
 		jQuery(".slyd_nav").hide();
 	} else {
-		// Stop the lock on hover, start it on mouseOut and on document ready
+		// Stop the clock on hover, start it on mouseOut and on document ready
 		jQuery(".slyd").hover( function() {
 			jQuery.doTimeout( "slyd_timer" );
 		}, function() {
