@@ -224,14 +224,15 @@ License: GPL3
 			$post_thumb			=	'';
 			$slyd_margin		=	'';
 			
-			if ( ( $height = 'auto' ) && ( $post_thumb_src[0] ) ) {
+			if ( ( $height == 'auto' ) && ( $post_thumb_src[0] ) ) {
 				$post_thumb_size = getimagesize( $post_thumb_src[0] );
 				if ( $post_thumb_size[1] > $slyd_height ) {
 					$slyd_height = $post_thumb_size[1];
 				}
+			}
+			
+			if ( $post_thumb_src[0] ) {
 				$post_thumb = "<img src='{$post_thumb_src[0]}' />";
-			} else {
-				$post_thumb = '';
 			}
 			
 			if ( $i > 0 ) {
