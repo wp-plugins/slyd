@@ -3,7 +3,7 @@
 Plugin Name: Slyd
 Plugin URI: http://trezy.com/slyd
 Description: Slyd is an animated slider to display your latest blog posts.
-Version: 1.2
+Version: 1.2.0
 Author: Trezy
 Author URI: http://trezy.com
 License: GPL3
