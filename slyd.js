@@ -1,4 +1,36 @@
 jQuery(document).ready(function(){
+	/*****************************************
+	* Available variables:
+	******************************************
+	*  
+	*  slyd_posts		=	The number of posts to be displayed
+	*						DEFAULT: 5
+	*  
+	*  slyd_height		=	A height value set by the user OR
+	*						The height of the tallest image
+	*						DEFAULT: auto
+	*  
+	*  slyd_nav			=	Show to display nav arrows OR
+	*						Hide to hide nav arrows OR
+	*						Hover to display nav arrows only on hover
+	*						DEFAULT: hover
+	*  
+	*  slyd_titles		=	True to display titles OR
+	*						False to hide titles
+	*						DEFAULT: true
+	*  
+	*  slyd_captions	=	True to display captions OR
+	*						False to hide captions
+	*						DEFAULT: true
+	*  
+	*  slyd_autoadvance	=	True to autoadvance slydr OR
+	*						False to stop autoadvance
+	*						DEFAULT: true
+	*  
+	*  slyd_speed		=	A speed value in milliseconds set by the user
+	*						DEFAULT: 4000
+	*  
+	*/
 	
 	// Start a counter to measure slidecount against
 	var i = 1;

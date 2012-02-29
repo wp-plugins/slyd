@@ -3,7 +3,7 @@
 Plugin Name: Slyd
 Plugin URI: http://trezy.com/slyd
 Description: Slyd is an animated slider to display your latest blog posts.
-Version: 1.2
+Version: 1.2.3
 Author: Trezy
 Author URI: http://trezy.com
 License: GPL3
@@ -211,8 +211,8 @@ License: GPL3
 		if ( $outline != 'none' ) { $slyd_outline = "outline: 1px solid {$outline};"; }
 		if ( $show_titles ) { $slyd_titles = "var slyd_titles = {$show_titles}; "; }
 		if ( $show_captions ) { $slyd_captions = "var slyd_captions = {$show_captions}; "; }
-		if ( $speed ) { $slyd_speed_js = "var slyd_speed = {$speed}; "; }
 		if ( $autoadvance ) { $slyd_autoadvance_js = "var slyd_autoadvance = true; "; }
+		if ( $speed ) { $slyd_speed_js = "var slyd_speed = {$speed}; "; }
 		
 		foreach ( $slydposts as $post ) : setup_postdata($post);
 			$post_title			=	get_the_title();																					// Get the post's title
@@ -256,7 +256,7 @@ License: GPL3
 		endforeach;
 		
 		$post			=	$tmp_post;	// Empty $post once Slyd is done with it
-		$slyd_js		=	"<script type='text/javascript'> var slyd_posts = {$i}; var slyd_height = {$slyd_height}; {$nav_js}{$slyd_titles}{$slyd_captions}{$slyd_height_js}{$slyd_autoadvance_js}{$slyd_speed_js}</script>";
+		$slyd_js		=	"<script type='text/javascript'> var slyd_posts = {$i}; var slyd_height = {$slyd_height}; {$nav_js}{$slyd_titles}{$slyd_captions}{$slyd_speed_js}{$slyd_autoadvance_js}</script>";
 			
 		return 
 			"{$slyd_js}
