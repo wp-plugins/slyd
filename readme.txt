@@ -56,7 +56,7 @@ The Slyd shortcode supports the following options:
 
 = How can I customize my Slyd template tag? =
 
-The Slyd template tag supports the same options as the shortcode.
+The Slyd template tag supports the same options as the shortcode. Enter the category as an empty value to get all categories, i.e. `<?php slyd( '', 3,` ... `, true ?>`
 
 **Usage**
 
