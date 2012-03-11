@@ -190,13 +190,13 @@ License: GPL3
 
 		global $post;
 		
-		if ( $category ) {
+		if ( $category = '' ) {
 			$args = array(
-				'category'			=>	$category,
 				'numberposts'		=>	$slydcount
 			);
 		} else {
 			$args = array(
+				'category'			=>	$category,
 				'numberposts'		=>	$slydcount
 			);
 		}
