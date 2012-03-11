@@ -35,9 +35,11 @@ jQuery(document).ready(function(){
 	// Start a counter to measure slidecount against
 	var i = 1;
 		
-	// Set Slyd's height based on setting from shortcode
-	jQuery(".a_slyd").css({ height: slyd_height });
-	jQuery(".slyd_content").css({ height: slyd_height });
+	if ( ( slyd_height !== undefined ) ) {
+		// Set Slyd's height based on setting from shortcode
+		jQuery(".a_slyd").css({ height: slyd_height });
+		jQuery(".slyd_content").css({ height: slyd_height });
+	};
 	
 	// Show/Hide Titles and Captions based on setting from shortcode
 	if ( slyd_titles == false ) { jQuery(".slyd_title").hide(); };

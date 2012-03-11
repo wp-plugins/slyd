@@ -4,7 +4,7 @@ Donate link: http://trezy.com/slyd
 Tags: slyd, slydr, slide, slider, wordpress, plugins, carousel, banners, featured content, gallery, image rotation, javascript slider, jquery slider, responsive, slideshow
 Requires at least: 3.0
 Tested up to: 3.3.1
-Stable tag: 1.2.3
+Stable tag: 1.3.0
 
 Slyd is an animated Slydr to display your latest blog posts.
 
@@ -12,9 +12,7 @@ Slyd is an animated Slydr to display your latest blog posts.
 
 Slyd is an easy-to-use, highly-customizable slider plugin for WordPress. There are plenty of plugins out there that allow you to easily insert a slider into your WordPress using a shortcode but they require creating a custom slide for every post you write.
 
-With Slyd you can shirk those inconveniences. Slyd automatically pulls in all of your latest posts (or just the ones in a certain category). All Slyd requires is that you upload a Slyd image on your post page.
-
-features and customization options, including:
+With Slyd you can shirk those inconveniences. Slyd automatically pulls in all of your latest posts (or just the ones in a certain category). All Slyd requires is that you upload a Slyd image or a Featured image on your post page.
 
 * **CSS3/jQuery Animations** - Slyd is built to be pretty so naturally it uses CSS3 and jQuery to impress viewers.
 * **Category Selection** - Create a new Category or use an existing one to limit the posts that display in the Slydr.
@@ -46,12 +44,15 @@ The Slyd shortcode supports the following options:
 * `outline` - Set an outline for your Slydr. Can be defined as any CSS readable color (i.e. `#00f`, `#0000ff`, `rgba(0, 0, 255, 1)`, `red`) or set to `none`. Defaults to black.
 * `show_titles` - Show/Hide blog titles. Can be set to either `true` or `false`. Defaults to `true`.
 * `show_captions` - Same as `show_titles`, but for your blog's excerpt.
+* `caption_length` - Set the length of Slyd captions in characters. Defaults to `150`.
 * `speed` - Set the speed for your Slydr, i.e. how long a slyd will stay before switching to the next one. Define in milliseconds (`1000` = 1 second). Defaults to `4000` or 4 seconds.
 * `autoadvance` - Set to `false` to stop autoadvance. Defaults to `true`.
+* `use_featured` - By default Slyd will load a post's Featured Image if there is no Slyd Image. Setting this to `false` disable the use of Featured Images in Slyd.
+* `no_links` - Setting this to `true` will cause Slyd to not link slyds to their posts. Default is `false`.
 
 **Usage**
 
-`[slyd category='foo' slydcount='3', nav='show' height='300' width='960px' outline='orange' show_titles='false' show_captions='false' speed='3000' autoadvance='false']`
+`[slyd category='foo' slydcount='3', nav='show' height='300' width='960px' outline='orange' show_titles='false' show_captions='false' caption_length='200' speed='3000' autoadvance='false' use_featured='false' no_links=`true`]`
 
 = How can I customize my Slyd template tag? =
 
@@ -59,9 +60,9 @@ The Slyd template tag supports the same options as the shortcode.
 
 **Usage**
 
-`<?php slyd( $category, $slydcount, $nav, $height, $width, $outline, $show_titles, $show_captions, $speed, $autoadvance ); ?>`
+`<?php slyd( $category, $slydcount, $nav, $height, $width, $outline, $show_titles, $show_captions, $caption_length, $autoadvance, $speed, $use_featured, $no_links ); ?>`
 
-`<?php slyd( 'foo', '3', 'show', '300', '960px', 'orange', false, false, 3000, false ); ?>`
+`<?php slyd( 'foo', '3', 'show', '300', '960px', 'orange', false, false, 200, false, 3000, false, true ); ?>`
 
 = I need more help! =
 
@@ -78,11 +79,17 @@ No major changes needed, just upgrade from the Wordpress interface. ;-)
 == Plans for the Future ==
 * **Themes**
 * **Custom Slyd caption for each post**
-* **Gallery style Slydr**
 * **Image Options** - Fit (image stretches to fitwidth of container) or Center (image maintains original proportions ans can anchor to the center, any corner, or any side).
 * **Animation Options** - Slide, Slide Over, or Fade
+* **Option to remove Slyd Image from a post**
 
 == Changelog ==
+
+= 1.3.0 =
+* Added `use_featured` attribute.
+* Added `caption_length` attribute.
+* Added `no_links` attribute.
+* If a post has neither a Slyd or a Featured image, Slyd will hide the post and load one more.
 
 = 1.2.3 =
 * Fixed a bug causing the height parameter to only work if "value > tallest image height".

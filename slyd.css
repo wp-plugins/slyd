@@ -26,6 +26,7 @@
 	.slyd .slyd_nav {
 		display: block;
 		width: 100%;
+		z-index: 520;
 	}
 		.slyd .slyd_nav .slyd_previous,
 		.slyd .slyd_nav .slyd_next {
@@ -36,7 +37,7 @@
 			position: absolute;
 			top: 50%;
 			width: 80px;
-			z-index: 520;
+			z-index: 521;
 		}
 		.slyd .slyd_nav .slyd_previous {
 			left: 0;
@@ -96,3 +97,6 @@
 						margin: 0;
 						padding: 10px;
 					}
+		.slyd .slyd_wrapper .slyd_hide {
+			display: none;
+		}
