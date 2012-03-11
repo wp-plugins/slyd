@@ -4,7 +4,7 @@ Donate link: http://trezy.com/slyd
 Tags: slyd, slydr, slide, slider, wordpress, plugins, carousel, banners, featured content, gallery, image rotation, javascript slider, jquery slider, responsive, slideshow
 Requires at least: 3.0
 Tested up to: 3.3.1
-Stable tag: 1.3.0
+Stable tag: 1.3.1
 
 Slyd is an animated Slydr to display your latest blog posts.
 
@@ -84,6 +84,9 @@ No major changes needed, just upgrade from the Wordpress interface. ;-)
 * **Option to remove Slyd Image from a post**
 
 == Changelog ==
+
+= 1.3.1 =
+* Template tag should now work with an empty category attribute.
 
 = 1.3.0 =
 * Added `use_featured` attribute.
