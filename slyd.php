@@ -3,7 +3,7 @@
 Plugin Name: Slyd
 Plugin URI: http://trezy.com/slyd
 Description: Slyd is an animated slider to display your latest blog posts.
-Version: 1.3.2
+Version: 1.3.3
 Author: Trezy
 Author URI: http://trezy.com
 License: GPL3
@@ -179,24 +179,99 @@ License: GPL3
 		$term = get_term_by( 'name', $cat_name, 'category' );
 		return $term->term_id;
 	}
-
-	function slyd( $category, $slydcount, $nav, $height, $width, $outline, $show_titles, $show_captions, $caption_length, $autoadvance, $speed, $use_featured, $no_links ) {
+	
+	// Declare debugging variables for global use
+	$debug_category;
+	$debug_slydcount;
+	$debug_nav;
+	$debug_height;
+	$debug_width;
+	$debug_outline;
+	$debug_show_titles;
+	$debug_show_captions;
+	$debug_caption_length;
+	$debug_autoadvance;
+	$debug_speed;
+	$debug_use_featured;
+	$debug_no_links;
+	
+	function slyd_debugger() {
+		switch ( $debug_category ) {
+			case '' || 'all':
+				$debug_category_return = 'Show All Categories <em>(default)</em>';
+				break;
+			default:
+				$debug_category_return = $debug_category . '<br /><strong>Category ID is:</strong> ' . get_category_id($debug_category);
+				break;
+		}
+		
+		switch ( $debug_nav ) {
+			case 'show':
+				$debug_nav_return = 'Always Show';
+				break;
+			case 'hide':
+				$debug_nav_return = 'Always Hide';
+				break;
+			case 'hover':
+				$debug_nav_return = 'Show on Hover <em>(default)</em>';
+				break;
+		}
+		
+		switch ( $debug_autoadvance ) {
+			case true:
+				$debug_autoadvance_return = 'On <em>(default)</em>';
+				break;
+			case false:
+				$debug_autoadvance_return = 'Off';
+				break;
+		}
+		
+		switch ( $debug_use_featured ) {
+			case 'always':
+				$debug_use_featured_return = 'Use Featured Image First';
+				break;
+			case 'never':
+				$debug_use_featured_return = 'Never Use the Featured Image <em>(default)</em>';
+				break;
+			case 'noslyd':
+				$debug_use_featured_return = 'Use Slyd Image First';
+				break;
+		}
+				
+		return 
+			  '<div id="slyd_debugger">'
+			. '<h1>Slyd Debugger</h1>'
+			. "<strong>Category Display:</strong> {$debug_category_return}<br />"
+			. "<strong>Slyd Count is:</strong> {$debug_slydcount} posts<br />"
+			. "<strong>Nav Style:</strong> {$debug_nav_return}<br />"
+			. "<strong>Slyd Height is:</strong> {$debug_height}<br />"
+			. "<strong>Slyd Width is:</strong> {$debug_width}<br />"
+			. "<strong>Slyd Outline is:</strong> {$debug_outline}<br />"
+			. "<strong>Show Titles:</strong> {$debug_show_titles}<br />"
+			. "<strong>Show Captions:</strong> {$debug_show_captions}<br />"
+			. "<strong>Caption Length:</strong> {$debug_caption_length} characters<br />"
+			. "<strong>Autoadvance On/Off:</strong> {$debug_autoadvance_return}<br />"
+			. "<strong>Transition Speed:</strong> {$debug_speed}ms<br />"
+			. "<strong>Image Gather Style:</strong> {$debug_use_featured_return}<br />"
+			. "<strong>Use Links:</strong> {$debug_no_links}<br />"
+			. '</div>';
+	}
+	
+	function slyd( $category, $slydcount, $nav, $height, $width, $outline, $show_titles, $show_captions, $caption_length, $autoadvance, $speed, $use_featured, $no_links, $debug ) {
 		// Add the stylesheet and javascript to the queue; javascript will only load if jQuery is loaded
 		wp_enqueue_style( 'slyd_css', plugins_url( 'slyd.css', __FILE__ ) );
 		wp_enqueue_script( 'slyd_js', plugins_url( 'slyd.js', __FILE__ ), array( 'jquery' ) );
 		wp_enqueue_script( 'dotimeout', plugins_url( 'jquery.dotimeout.js', __FILE__ ), array( 'jquery' ) );
-		
-		$category				=	get_category_id($category);
 
 		global $post;
 		
-		if ( $category = '' ) {
+		if ( $category == 'all' || $category == '' ) {
 			$args = array(
 				'numberposts'		=>	$slydcount
 			);
 		} else {
 			$args = array(
-				'category'			=>	$category,
+				'category'			=>	get_category_id($category),
 				'numberposts'		=>	$slydcount
 			);
 		}
@@ -233,36 +308,79 @@ License: GPL3
 			$slyd_margin		=	'';
 			$slyd_links_open	=	'';
 			$slyd_links_close	=	'';
+			$slyd_no_img		=	'';
 			
 			if ( $i > 0 ) {
 				$margin_left = " style='margin-left: {$i}00%;'";
 			} else {
-				$margin_left = " style='margin-left: 0%;'";
+				$margin_left = ' style="margin-left: 0%;"';
 			}
 			
-			if ( $post_slyd_src[0] ) {
-				$post_thumb = "<img src='{$post_slyd_src[0]}' />";
-				if ( $height == 'auto' ) {
-					$post_thumb_size = getimagesize( $post_slyd_src[0] );
-					if ( $post_thumb_size[1] > $slyd_height ) {
-						$slyd_height = $post_thumb_size[1];
+			switch ( $use_featured ) {
+				case 'noslyd':
+					if ( $post_slyd_src[0] ) {
+						$post_thumb = "<img src='{$post_slyd_src[0]}' />";
+						if ( $height == 'auto' ) {
+							$post_thumb_size = getimagesize( $post_slyd_src[0] );
+							if ( $post_thumb_size[1] > $slyd_height ) {
+								$slyd_height = $post_thumb_size[1];
+							}
+						}
+					} else if ( $post_featured_src[0] ) {
+						$post_thumb = "<img src='{$post_featured_src[0]}' />";
+						if ( $height == 'auto' ) {
+							$post_thumb_size = getimagesize( $post_featured_src[0] );
+							if ( $post_thumb_size[1] > $slyd_height ) {
+								$slyd_height = $post_thumb_size[1];
+							}
+						}
+					} else {
+						$args['numberposts']++;
+						$i--;
+						$slyd_no_img = ' slyd_hide';
 					}
-				}
-			} else if ( $use_featured && $post_featured_src[0] ) {
-				$post_thumb = "<img src='{$post_featured_src[0]}' />";
-				if ( $height == 'auto' ) {
-					$post_thumb_size = getimagesize( $post_featured_src[0] );
-					if ( $post_thumb_size[1] > $slyd_height ) {
-						$slyd_height = $post_thumb_size[1];
+					break;
+				case 'always':
+					if ( $post_featured_src[0] ) {
+						$post_thumb = "<img src='{$post_featured_src[0]}' />";
+						if ( $height == 'auto' ) {
+							$post_thumb_size = getimagesize( $post_featured_src[0] );
+							if ( $post_thumb_size[1] > $slyd_height ) {
+								$slyd_height = $post_thumb_size[1];
+							}
+						}
+					} else if ( $post_slyd_src[0] ) {
+						$post_thumb = "<img src='{$post_slyd_src[0]}' />";
+						if ( $height == 'auto' ) {
+							$post_thumb_size = getimagesize( $post_slyd_src[0] );
+							if ( $post_thumb_size[1] > $slyd_height ) {
+								$slyd_height = $post_thumb_size[1];
+							}
+						}
+					} else {
+						$args['numberposts']++;
+						$i--;
+						$slyd_no_img = ' slyd_hide';
 					}
-				}
-			} else {
-				$args['numberposts']++;
-				$i--;
-				$slyd_no_img = ' slyd_hide';
+					break;
+				case 'never':
+					if ( $post_slyd_src[0] ) {
+						$post_thumb = "<img src='{$post_slyd_src[0]}' />";
+						if ( $height == 'auto' ) {
+							$post_thumb_size = getimagesize( $post_slyd_src[0] );
+							if ( $post_thumb_size[1] > $slyd_height ) {
+								$slyd_height = $post_thumb_size[1];
+							}
+						}
+					} else {
+						$args['numberposts']++;
+						$i--;
+						$slyd_no_img = ' slyd_hide';
+					}
+					break;
 			}
 			
-			if ( $no_links ) {
+			if ( !$no_links ) {
 				$slyd_links_open	=	"<a href='{$post_permalink}'>";
 				$slyd_links_close	=	'</a>';
 			} else {
@@ -271,8 +389,8 @@ License: GPL3
 			}
 			
 			$ret .= 
-				  $slyd_links_open
-				. "	<div class='a_slyd{$slyd_no_img}'{$margin_left}>"
+				  "	<div class='a_slyd{$slyd_no_img}'{$margin_left}>"
+				. $slyd_links_open
 				. '		<div class="slyd_content">'
 				. "			{$post_thumb}"
 				. "			<h2 class='slyd_title'>{$post_title}</h2>"
@@ -280,13 +398,31 @@ License: GPL3
 				. "				{$post_content}..."
 				. '			</div>'
 				. '		</div>'
-				. '	</div>'
-				. $slyd_links_close;
+				. $slyd_links_close
+				. '	</div>';
 			$i++;
 		endforeach;
 		
 		$post			=	$tmp_post;	// Empty $post once Slyd is done with it
 		$slyd_js		=	"<script type='text/javascript'> var slyd_posts = {$i}; var slyd_height = {$slyd_height}; {$nav_js}{$slyd_titles}{$slyd_captions}{$slyd_speed_js}{$slyd_autoadvance_js}</script>";
+		
+		
+		if ( $debug ) {
+			$debug_category			=	$args['category'];
+			$debug_slydcount		=	$args['numberposts'];
+			$debug_nav				=	$nav;
+			$debug_height			=	$slyd_height . "px";
+			$debug_width			=	$width;
+			$debug_outline			=	$outline;
+			$debug_show_titles		=	$show_titles;
+			$debug_show_captions	=	$show_captions;
+			$debug_caption_length	=	$caption_length;
+			$debug_autoadvance		=	$autoadvance;
+			$debug_speed			=	$speed;
+			$debug_use_featured		=	$use_featured;
+			$debug_no_links			=	$no_links;
+			slyd_debugger();
+		}
 			
 		return 
 			  "{$slyd_js}"
@@ -305,8 +441,8 @@ License: GPL3
 	function slyd_shortcode( $atts ) {		
 		// Retrieve attributes set by the shortcode and set defaults for unregistered attributes. 
 		extract( shortcode_atts( array(
-			'category'		=>	'',
-			'slydcount'		=>	'5',
+			'category'		=>	'all',
+			'slydcount'		=>	5,
 			'nav'			=>	'hover',
 			'height'		=>	'auto',
 			'width'			=>	'100%',
@@ -315,13 +451,14 @@ License: GPL3
 			'show_captions'	=>	true,
 			'caption_length'=>	150,
 			'autoadvance'	=>	true,
-			'speed'			=>	'4000',
-			'use_featured'	=>	'true',
-			'no_links'		=>	'false'
+			'speed'			=>	4000,
+			'use_featured'	=>	'never',
+			'no_links'		=>	false,
+			'debug'			=>	false
 		), $atts ) );
 		
 		if ( !is_admin() ) {
-			return slyd( $category, $slydcount, $nav, $height, $width, $outline, $show_titles, $show_captions, $caption_length, $autoadvance, $speed, $use_featured, $no_links );
+			return slyd( $category, $slydcount, $nav, $height, $width, $outline, $show_titles, $show_captions, $caption_length, $autoadvance, $speed, $use_featured, $no_links, $debug );
 		}
 	}
 		

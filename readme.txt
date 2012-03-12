@@ -4,7 +4,7 @@ Donate link: http://trezy.com/slyd
 Tags: slyd, slydr, slide, slider, wordpress, plugins, carousel, banners, featured content, gallery, image rotation, javascript slider, jquery slider, responsive, slideshow
 Requires at least: 3.0
 Tested up to: 3.3.1
-Stable tag: 1.3.2
+Stable tag: 1.3.3
 
 Slyd is an animated Slydr to display your latest blog posts.
 
@@ -36,7 +36,7 @@ Either use the shortcode `[slyd]` in the page Slydr is to display *or* place `<?
 
 The Slyd shortcode supports the following options:
 
-* `category` - Add the category(s) you want Slyd to be limited to. Separate multiple categories with commas. Default is all categories.
+* `category` - Add the category(s) you want Slyd to be limited to. Default is all categories.
 * `slydcount` - How many posts you want Slyd to display. Default is 5.
 * `nav` - Determines how to display the navigation arrows. Options are `show` for always visible arrows, `hide` to get rid of the arrows entirely, or `hover` to only display the arrows when a user hovers over the Slydr. Defaults to `hover`.
 * `height` - Set the height for your Slydr. Must be defined in pixels, but don't include the unit (i.e. `height='500'`). Defaults to the height of your tallest slyd image.
@@ -47,22 +47,22 @@ The Slyd shortcode supports the following options:
 * `caption_length` - Set the length of Slyd captions in characters. Defaults to `150`.
 * `speed` - Set the speed for your Slydr, i.e. how long a slyd will stay before switching to the next one. Define in milliseconds (`1000` = 1 second). Defaults to `4000` or 4 seconds.
 * `autoadvance` - Set to `false` to stop autoadvance. Defaults to `true`.
-* `use_featured` - By default Slyd will load a post's Featured Image if there is no Slyd Image. Setting this to `false` disable the use of Featured Images in Slyd.
-* `no_links` - Setting this to `true` will cause Slyd to not link slyds to their posts. Default is `false`.
+* `use_featured` - Determines when Slyd should use Featured images. Options are `always` to use Featured images instead of Slyd images, `noslyd` to only use it if there is no Slyd image, or `never` to only use Slyd images. Defaults to `never`.
+* `no_links` - Set this to 'true' to use Slyd as a slideshow. Defaults to 'false'.
 
 **Usage**
 
-`[slyd category='foo' slydcount='3', nav='show' height='300' width='960px' outline='orange' show_titles='false' show_captions='false' caption_length='200' speed='3000' autoadvance='false' use_featured='false' no_links=`true`]`
+`[slyd category='foo' slydcount='3', nav='show' height='300' width='960px' outline='orange' show_titles='false' show_captions='false' caption_length='200' speed='3000' autoadvance='false' use_featured='false' no_links='always']`
 
 = How can I customize my Slyd template tag? =
 
-The Slyd template tag supports the same options as the shortcode. Enter the category as an empty value to get all categories, i.e. `<?php slyd( '', 3,` ... `, true ?>`
+The Slyd template tag supports the same options as the shortcode. Use `all` to get all categories, i.e. `<?php slyd( 'all', 3,` ... `, 'always' ?>`
 
 **Usage**
 
 `<?php slyd( $category, $slydcount, $nav, $height, $width, $outline, $show_titles, $show_captions, $caption_length, $autoadvance, $speed, $use_featured, $no_links ); ?>`
 
-`<?php slyd( 'foo', '3', 'show', '300', '960px', 'orange', false, false, 200, false, 3000, false, true ); ?>`
+`<?php slyd( 'foo', '3', 'show', '300', '960px', 'orange', false, false, 200, false, 3000, false, 'always' ); ?>`
 
 = I need more help! =
 
@@ -84,6 +84,13 @@ No major changes needed, just upgrade from the Wordpress interface. ;-)
 * **Option to remove Slyd Image from a post**
 
 == Changelog ==
+
+= 1.3.3 =
+* Changed `use_featured` to use `always`, `never`, or `noslyd` instead of `true` or `false`.
+* Changed `category` to use `all` to display all posts.
+* Fixed an issue causing all following posts to be hidden if one post didn't have an image.
+* Fixed fade animation for nav arrows.
+* Updated nav arrows to use CSS3 fade effects instead of jQuery.
 
 = 1.3.2 =
 * Removed some debugging code that was left in by accident.

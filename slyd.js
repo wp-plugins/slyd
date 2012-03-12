@@ -133,19 +133,15 @@ jQuery(document).ready(function(){
 			slyd_clock_analysis();
 		};
 		
-		switch (slyd_nav) {
+		switch ( slyd_nav ) {
 			case "show":
+				jQuery(".slyd_nav").addClass("show_always");
 				break;
 			case "hide":
-				jQuery(".slyd_nav").hide();
+				jQuery(".slyd_nav").addClass("show_never");
 				break;
 			case "hover":
-				jQuery(".slyd_nav").hide();
-				jQuery(".slyd").hover( function() {
-					jQuery(".slyd_nav").fadeIn(500);
-				}, function() {
-					jQuery(".slyd_nav").fadeOut(500);
-				});
+				jQuery(".slyd_nav").addClass("show_hover");
 				break;
 			default:
 		}
