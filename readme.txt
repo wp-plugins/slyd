@@ -52,7 +52,7 @@ The Slyd shortcode supports the following options:
 
 **Usage**
 
-`[slyd category='foo' slydcount='3', nav='show' height='300' width='960px' outline='orange' show_titles='false' show_captions='false' caption_length='200' speed='3000' autoadvance='false' use_featured='false' no_links=`true`]`
+`[slyd category='foo' slydcount='3', nav='show' height='300' width='960px' outline='orange' show_titles='false' show_captions='false' caption_length='200' speed='3000' autoadvance='false' use_featured='false' no_links='true']`
 
 = How can I customize my Slyd template tag? =
 
