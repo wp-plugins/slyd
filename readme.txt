@@ -93,7 +93,7 @@ Otherwise, no major changes needed. Just upgrade from the Wordpress interface. ;
 
 == Changelog ==
 
-= 1.4.0 =
+= 1.3.4 =
 * Added preloader
 * Added option to changepreloader image
 * Added option to change navigation button images
