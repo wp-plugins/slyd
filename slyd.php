@@ -180,84 +180,7 @@ License: GPL3
 		return $term->term_id;
 	}
 	
-	// Declare debugging variables for global use
-	$debug_category;
-	$debug_slydcount;
-	$debug_nav;
-	$debug_height;
-	$debug_width;
-	$debug_outline;
-	$debug_show_titles;
-	$debug_show_captions;
-	$debug_caption_length;
-	$debug_autoadvance;
-	$debug_speed;
-	$debug_use_featured;
-	$debug_no_links;
-	
-	function slyd_debugger() {
-		switch ( $debug_category ) {
-			case '' || 'all':
-				$debug_category_return = 'Show All Categories <em>(default)</em>';
-				break;
-			default:
-				$debug_category_return = $debug_category . '<br /><strong>Category ID is:</strong> ' . get_category_id($debug_category);
-				break;
-		}
-		
-		switch ( $debug_nav ) {
-			case 'show':
-				$debug_nav_return = 'Always Show';
-				break;
-			case 'hide':
-				$debug_nav_return = 'Always Hide';
-				break;
-			case 'hover':
-				$debug_nav_return = 'Show on Hover <em>(default)</em>';
-				break;
-		}
-		
-		switch ( $debug_autoadvance ) {
-			case true:
-				$debug_autoadvance_return = 'On <em>(default)</em>';
-				break;
-			case false:
-				$debug_autoadvance_return = 'Off';
-				break;
-		}
-		
-		switch ( $debug_use_featured ) {
-			case 'always':
-				$debug_use_featured_return = 'Use Featured Image First';
-				break;
-			case 'never':
-				$debug_use_featured_return = 'Never Use the Featured Image <em>(default)</em>';
-				break;
-			case 'noslyd':
-				$debug_use_featured_return = 'Use Slyd Image First';
-				break;
-		}
-				
-		return 
-			  '<div id="slyd_debugger">'
-			. '<h1>Slyd Debugger</h1>'
-			. "<strong>Category Display:</strong> {$debug_category_return}<br />"
-			. "<strong>Slyd Count is:</strong> {$debug_slydcount} posts<br />"
-			. "<strong>Nav Style:</strong> {$debug_nav_return}<br />"
-			. "<strong>Slyd Height is:</strong> {$debug_height}<br />"
-			. "<strong>Slyd Width is:</strong> {$debug_width}<br />"
-			. "<strong>Slyd Outline is:</strong> {$debug_outline}<br />"
-			. "<strong>Show Titles:</strong> {$debug_show_titles}<br />"
-			. "<strong>Show Captions:</strong> {$debug_show_captions}<br />"
-			. "<strong>Caption Length:</strong> {$debug_caption_length} characters<br />"
-			. "<strong>Autoadvance On/Off:</strong> {$debug_autoadvance_return}<br />"
-			. "<strong>Transition Speed:</strong> {$debug_speed}ms<br />"
-			. "<strong>Image Gather Style:</strong> {$debug_use_featured_return}<br />"
-			. "<strong>Use Links:</strong> {$debug_no_links}<br />"
-			. '</div>';
-	}
-	
-	function slyd( $category, $slydcount, $nav, $height, $width, $outline, $show_titles, $show_captions, $caption_length, $autoadvance, $speed, $use_featured, $no_links, $debug ) {
+	function slyd( $category, $slydcount, $nav, $height, $width, $outline, $show_titles, $show_captions, $caption_length, $autoadvance, $speed, $use_featured, $no_links, $custom_loading_image, $nav_images, $nav_prev, $nav_next ) {
 		// Add the stylesheet and javascript to the queue; javascript will only load if jQuery is loaded
 		wp_enqueue_style( 'slyd_css', plugins_url( 'slyd.css', __FILE__ ) );
 		wp_enqueue_script( 'slyd_js', plugins_url( 'slyd.js', __FILE__ ), array( 'jquery' ) );
@@ -286,8 +209,6 @@ License: GPL3
 		$ret					=	'';
 		$i						=	0;
 		
-		$slyd_previous			=	plugins_url( 'previous.png', __FILE__ );
-		$slyd_next				=	plugins_url( 'next.png', __FILE__ );
 		
 		if ( $height != 'auto' ) { $slyd_height = $height; }
 		if ( $nav ) { $nav_js = "var slyd_nav = '{$nav}'; "; }
@@ -297,12 +218,38 @@ License: GPL3
 		if ( $autoadvance ) { $slyd_autoadvance_js = "var slyd_autoadvance = true; "; }
 		if ( $speed ) { $slyd_speed_js = "var slyd_speed = {$speed}; "; }
 		
+		if ( !$nav_images || !$nav_prev || !$nav_next ) {
+			$slyd_previous		=	plugins_url( 'previous.png', __FILE__ );
+			$slyd_next			=	plugins_url( 'next.png', __FILE__ );
+		} else if ( $nav_images ) {
+			$slyd_previous		=	$nav_images + 'previous.png';
+			$slyd_next			=	$nav_images + 'next.png';
+		} else {
+			$slyd_previous		=	$nav_prev;
+			$slyd_next			=	$nav_next;
+		}
+		
+		if ( !$custom_loading_image ) {
+			$loading_image		=	plugins_url( 'loading.gif', __FILE__ );
+		} else {
+			$loading_image		=	$custom_loading_image;
+		}
+		
 		foreach ( $slydposts as $post ) : setup_postdata($post);
-			$post_title			=	get_the_title();																					// Get the post's title
-			$post_content		=	substr( apply_filters( 'the_content', get_the_content('', '', '') ), 0, $caption_length );			// Get the post's content
-			$post_permalink		=	get_permalink();																					// Get the post's permalink
-			$post_slyd_image	=	get_post_meta( $post->ID, '_slyd_attached_image', true );											// Get the post's Slyd image src
-			$post_slyd_src		= 	wp_get_attachment_image_src( $post_slyd_image, 'full' );											// Get the post's featured image src
+			// Get the post's title
+			$post_title			=	get_the_title();
+			
+			// Get the post's content
+			$post_content		=	substr( apply_filters( 'the_content', get_the_content('', '', '') ), 0, $caption_length );
+			
+			// Get the post's permalink
+			$post_permalink		=	get_permalink();
+			
+			// Get the post's Slyd image src
+			$post_slyd_image	=	get_post_meta( $post->ID, '_slyd_attached_image', true );
+			
+			// Get the post's featured image src
+			$post_slyd_src		= 	wp_get_attachment_image_src( $post_slyd_image, 'full' );
 			$post_featured_src	=	wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'full' );
 			$post_thumb			=	'';
 			$slyd_margin		=	'';
@@ -405,28 +352,10 @@ License: GPL3
 		
 		$post			=	$tmp_post;	// Empty $post once Slyd is done with it
 		$slyd_js		=	"<script type='text/javascript'> var slyd_posts = {$i}; var slyd_height = {$slyd_height}; {$nav_js}{$slyd_titles}{$slyd_captions}{$slyd_speed_js}{$slyd_autoadvance_js}</script>";
-		
-		
-		if ( $debug ) {
-			$debug_category			=	$args['category'];
-			$debug_slydcount		=	$args['numberposts'];
-			$debug_nav				=	$nav;
-			$debug_height			=	$slyd_height . "px";
-			$debug_width			=	$width;
-			$debug_outline			=	$outline;
-			$debug_show_titles		=	$show_titles;
-			$debug_show_captions	=	$show_captions;
-			$debug_caption_length	=	$caption_length;
-			$debug_autoadvance		=	$autoadvance;
-			$debug_speed			=	$speed;
-			$debug_use_featured		=	$use_featured;
-			$debug_no_links			=	$no_links;
-			slyd_debugger();
-		}
 			
 		return 
 			  "{$slyd_js}"
-			. "<div class='slyd' style='height: {$slyd_height}px; width: {$width}; {$slyd_outline}'>"
+			. "<div class='slyd slyd_loading' style='height: {$slyd_height}px; width: {$width}; {$slyd_outline}'>"
 			. "	<div class='slyd_wrapper' style='height: {$slyd_height}px;'>"
 			. "		{$ret}"
 			. '	</div>'
@@ -441,24 +370,27 @@ License: GPL3
 	function slyd_shortcode( $atts ) {		
 		// Retrieve attributes set by the shortcode and set defaults for unregistered attributes. 
 		extract( shortcode_atts( array(
-			'category'		=>	'all',
-			'slydcount'		=>	5,
-			'nav'			=>	'hover',
-			'height'		=>	'auto',
-			'width'			=>	'100%',
-			'outline'		=>	'#000',
-			'show_titles'	=>	true,
-			'show_captions'	=>	true,
-			'caption_length'=>	150,
-			'autoadvance'	=>	true,
-			'speed'			=>	4000,
-			'use_featured'	=>	'never',
-			'no_links'		=>	false,
-			'debug'			=>	false
+			'category'				=>	'all',
+			'slydcount'				=>	5,
+			'nav'					=>	'hover',
+			'height'				=>	'auto',
+			'width'					=>	'100%',
+			'outline'				=>	'#000',
+			'show_titles'			=>	true,
+			'show_captions'			=>	true,
+			'caption_length'		=>	150,
+			'autoadvance'			=>	true,
+			'speed'					=>	4000,
+			'use_featured'			=>	'never',
+			'no_links'				=>	false,
+			'custom_loading_image'	=>	false,
+			'nav_images'			=>	false,
+			'nav_prev'				=>	false,
+			'nav_next'				=>	false
 		), $atts ) );
 		
 		if ( !is_admin() ) {
-			return slyd( $category, $slydcount, $nav, $height, $width, $outline, $show_titles, $show_captions, $caption_length, $autoadvance, $speed, $use_featured, $no_links, $debug );
+			return slyd( $category, $slydcount, $nav, $height, $width, $outline, $show_titles, $show_captions, $caption_length, $autoadvance, $speed, $use_featured, $no_links, $custom_loading_image, $nav_images, $nav_prev, $nav_next );
 		}
 	}
 		
