@@ -97,6 +97,7 @@ Otherwise, no major changes needed. Just upgrade from the Wordpress interface. ;
 
 = 1.3.5 =
 * Removed preloader (functionality temporarily broken)
+* Fixed captions loading even if they're not displayed
 * Fixed error where Slyd caused any loops run after it to be cut off. This bug messed up several other plugins and themes. Should fix a great many problems.
 
 = 1.3.4 =
