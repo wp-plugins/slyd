@@ -240,7 +240,11 @@ License: GPL3
 			$post_title			=	get_the_title();
 			
 			// Get the post's content
-			$post_content		=	substr( apply_filters( 'the_content', get_the_content('', '', '') ), 0, $caption_length );
+			if ( $show_captions ) {
+				$post_content	=	'<div class="slyd_caption">' . substr( apply_filters( 'the_content', get_the_content('', '', '') ), 0, $caption_length ) . '</div>';
+			} else {
+				$post_content	=	'';
+			}
 			
 			// Get the post's permalink
 			$post_permalink		=	get_permalink();
@@ -341,9 +345,7 @@ License: GPL3
 				. '		<div class="slyd_content">'
 				. "			{$post_thumb}"
 				. "			<h2 class='slyd_title'>{$post_title}</h2>"
-				. '			<div class="slyd_caption">'
-				. "				{$post_content}..."
-				. '			</div>'
+				. "			{$post_content}..."
 				. '		</div>'
 				. $slyd_links_close
 				. '	</div>';
