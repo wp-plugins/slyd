@@ -3,7 +3,7 @@
 Plugin Name: Slyd
 Plugin URI: http://trezy.com/portfolio/slyd
 Description: Slyd is an animated slider to display your latest blog posts.
-Version: 1.3.4
+Version: 1.3.5
 Author: Trezy
 Author URI: http://trezy.com
 License: GPL3
@@ -348,6 +348,7 @@ License: GPL3
 				. $slyd_links_close
 				. '	</div>';
 			$i++;
+			wp_reset_query();
 		endforeach;
 		
 		$post			=	$tmp_post;	// Empty $post once Slyd is done with it
@@ -355,7 +356,7 @@ License: GPL3
 			
 		return 
 			  "{$slyd_js}"
-			. "<div class='slyd slyd_loading' style='height: {$slyd_height}px; width: {$width}; {$slyd_outline}'>"
+			. "<div class='slyd' style='height: {$slyd_height}px; width: {$width}; {$slyd_outline}'>"
 			. "	<div class='slyd_wrapper' style='height: {$slyd_height}px;'>"
 			. "		{$ret}"
 			. '	</div>'
