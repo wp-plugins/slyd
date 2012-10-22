@@ -355,7 +355,7 @@ License: GPL3
 			
 		return 
 			  "{$slyd_js}"
-			. "<div class='slyd slyd_loading' style='height: {$slyd_height}px; width: {$width}; {$slyd_outline}'>"
+			. "<div class='slyd' style='height: {$slyd_height}px; width: {$width}; {$slyd_outline}'>"
 			. "	<div class='slyd_wrapper' style='height: {$slyd_height}px;'>"
 			. "		{$ret}"
 			. '	</div>'

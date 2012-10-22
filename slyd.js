@@ -33,8 +33,8 @@ jQuery(document).ready(function(){
 	*/
 	
 	// Expand Slyd once it loads
-	$(".slyd").load(function(){
-		$(this).removeClass("slyd_loading");
+	jQuery(".slyd").load(function(){
+		jQuery(".slyd").removeClass(".slyd_loading");
 	});
 	
 	// Start a counter to measure slidecount against
